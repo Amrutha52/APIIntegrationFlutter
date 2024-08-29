@@ -26,14 +26,29 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context)
   {
+    final homeProvider = Provider.of<HomeScreenController>(context);
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text(),
-          ],
-        ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await Provider.of<HomeScreenController>(context, listen: false).getUserData();
+          }),
+      body: Consumer<HomeScreenController>(
+        builder: (context, providerObj, child) =>
+            Center(
+              child: providerObj.isLoading == false ? Text(providerObj.fact.toString()) : CircularProgressIndicator(),
+              // child: Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     providerObj
+              //     // homeProvider.fact != null?
+              //     // Text(homeProvider.fact.toString()) : CircularProgressIndicator(),
+              //
+              //   ],
+              // ),
+            ),
+
+
       ),
     );
   }
